@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ink Settings</title>
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+  <main class="settings-shell">
+    <header class="masthead">
+      <div>
+        <div class="eyebrow">INK</div>
+        <h1>Settings</h1>
+      </div>
+      <div id="saveState" class="save-state" aria-live="polite">Ready</div>
+    </header>
+
+    <div class="section-heading">
+      <div class="section-kicker">DICTATION</div>
+      <p>Fast local speech-to-text for any text box.</p>
+    </div>
+
+    <section class="preferences" aria-label="Dictation preferences">
+      <div class="pref-row pref-row-tall">
+        <div class="pref-copy">
+          <label for="microphone">Microphone</label>
+          <p>Ink follows the Windows default unless you choose another input.</p>
+        </div>
+        <div class="pref-control mic-control">
+          <select id="microphone" aria-label="Microphone"></select>
+          <button id="refreshMics" class="quiet-button" type="button">Refresh</button>
+        </div>
+      </div>
+
+      <div class="pref-row">
+        <div class="pref-copy">
+          <label for="hotkey">Dictation hotkey</label>
+          <p>Press once to listen, then press again to transcribe and paste.</p>
+        </div>
+        <div class="pref-control">
+          <button id="hotkey" class="hotkey-capture" type="button">Ctrl + Alt + Space</button>
+        </div>
+      </div>
+
+      <div class="pref-row">
+        <div class="pref-copy">
+          <label for="language">Speech mode</label>
+          <p>English + Swedish handles code-switching. Multilingual detects other languages too.</p>
+        </div>
+        <div class="pref-control">
+          <select id="language">
+            <option value="bilingual">English + Swedish (automatic)</option>
+            <option value="multilingual">Any supported language (automatic)</option>
+            <option value="en">English only</option>
+            <option value="sv">Swedish only</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pref-row">
+        <div class="pref-copy">
+          <label for="performanceProfile">Performance</label>
+          <p>Automatic uses the stronger model on CUDA and a lighter model on CPU-only laptops.</p>
+        </div>
+        <div class="pref-control">
+          <select id="performanceProfile">
+            <option value="auto">Automatic</option>
+            <option value="lightweight">Lightweight</option>
+            <option value="high">High accuracy</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pref-row compact-row">
+        <div class="pref-copy">
+          <label for="autoPaste">Paste automatically</label>
+          <p>Insert the result into the text box that was already focused.</p>
+        </div>
+        <div class="pref-control">
+          <label class="switch">
+            <input id="autoPaste" type="checkbox" />
+            <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="pref-row compact-row">
+        <div class="pref-copy">
+          <label for="launchAtLogin">Launch with Windows</label>
+          <p>Keep Ink in the tray so its hotkeys are always ready.</p>
+        </div>
+        <div class="pref-control">
+          <label class="switch">
+            <input id="launchAtLogin" type="checkbox" />
+            <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="engine" aria-labelledby="engineTitle">
+      <div class="engine-heading">
+        <div>
+          <h2 id="engineTitle">Local speech engine</h2>
+          <p id="engineSummary">Checking whisper.cpp…</p>
+        </div>
+        <span id="engineBadge" class="engine-badge">Checking</span>
+      </div>
+      <div class="engine-actions">
+        <button id="installEngine" class="primary-button" type="button">Install speech engine</button>
+        <button id="openData" class="quiet-button" type="button">Open Ink data</button>
+      </div>
+      <pre id="engineProgress" class="engine-progress" hidden></pre>
+    </section>
+
+    <div class="section-heading translation-heading">
+      <div class="section-kicker">TRANSLATION</div>
+      <p>Translation has its own speech source, separate from Dictation. Choose Automatic for broad use or lock it to a language for faster, more reliable recognition.</p>
+    </div>
+
+    <section class="preferences" aria-label="Translation preferences">
+      <div class="pref-row">
+        <div class="pref-copy">
+          <label for="translationSource">Translate from</label>
+          <p>Automatic identifies the source briefly, then locks recognition to that language for the full utterance. Pick a known source for the lowest latency. Arabic mode uses the dedicated dialect pack when installed.</p>
+        </div>
+        <div class="pref-control">
+          <select id="translationSource" aria-label="Translation source language">
+            <optgroup label="Automatic">
+              <option value="auto">Any supported language (automatic)</option>
+              <option value="bilingual">English + Swedish (mixed)</option>
+            </optgroup>
+            <optgroup label="Recommended">
+              <option value="ar">Arabic (automatic dialect)</option>
+              <option value="en">English</option>
+              <option value="sv">Swedish</option>
+              <option value="ru">Russian</option>
+            </optgroup>
+            <optgroup label="More speech languages">
+              <option value="de">German</option>
+              <option value="fr">French</option>
+              <option value="es">Spanish</option>
+              <option value="it">Italian</option>
+              <option value="pt">Portuguese</option>
+              <option value="uk">Ukrainian</option>
+              <option value="tr">Turkish</option>
+              <option value="fa">Persian</option>
+              <option value="ur">Urdu</option>
+              <option value="hi">Hindi</option>
+              <option value="zh">Chinese</option>
+              <option value="ja">Japanese</option>
+              <option value="ko">Korean</option>
+              <option value="nl">Dutch</option>
+              <option value="pl">Polish</option>
+              <option value="da">Danish</option>
+              <option value="no">Norwegian</option>
+              <option value="fi">Finnish</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+
+      <div class="pref-row">
+        <div class="pref-copy">
+          <label for="translationTarget">Translate to</label>
+          <p>Choose the language Ink should paste. High-quality mode uses one multilingual model; lightweight mode uses downloaded language packs.</p>
+        </div>
+        <div class="pref-control target-control">
+          <select id="translationTarget" aria-label="Translation target language"></select>
+          <button id="refreshLanguages" class="quiet-button icon-button" type="button" title="Refresh language catalog" aria-label="Refresh language catalog">↻</button>
+        </div>
+      </div>
+
+      <div class="pref-row">
+        <div class="pref-copy">
+          <label for="translationQuality">Translation quality</label>
+          <p>Automatic uses guarded MADLAD on capable GPUs when installed, with a conservative fallback if a translation looks suspicious.</p>
+        </div>
+        <div class="pref-control">
+          <select id="translationQuality">
+            <option value="auto">Automatic</option>
+            <option value="quality">High quality</option>
+            <option value="fast">Fast / lightweight</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pref-row">
+        <div class="pref-copy">
+          <label for="translationHotkey">Translate hotkey</label>
+          <p>Records speech, detects its language, translates it, then pastes the result. You can change this shortcut any time.</p>
+        </div>
+        <div class="pref-control">
+          <button id="translationHotkey" class="hotkey-capture" type="button">Ctrl + Alt + T</button>
+        </div>
+      </div>
+
+      <div class="pref-row">
+        <div class="pref-copy">
+          <label for="playTranslationHotkey">Listen hotkey</label>
+          <p>Play the most recent translated text with an installed Windows voice. You can change this shortcut any time.</p>
+        </div>
+        <div class="pref-control">
+          <button id="playTranslationHotkey" class="hotkey-capture" type="button">Ctrl + Alt + L</button>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="engine" aria-labelledby="arabicAsrTitle">
+      <div class="engine-heading">
+        <div>
+          <h2 id="arabicAsrTitle">Arabic dialect speech pack</h2>
+          <p id="arabicAsrSummary">Checking dedicated Arabic recognition…</p>
+        </div>
+        <span id="arabicAsrBadge" class="engine-badge">Checking</span>
+      </div>
+      <div class="engine-actions engine-actions-wrap">
+        <button id="installArabicAsr" class="primary-button" type="button">Install Arabic dialect pack (~1.4 GB)</button>
+      </div>
+      <pre id="arabicAsrProgress" class="engine-progress" hidden></pre>
+      <p class="privacy-note">Recommended for Arabic → another language. This optional local INT8 model is fine-tuned for 13 Arabic dialects and is kept separate from normal English/Swedish dictation.</p>
+    </section>
+
+    <section class="engine" aria-labelledby="translationTitle">
+      <div class="engine-heading">
+        <div>
+          <h2 id="translationTitle">Offline translation engine</h2>
+          <p id="translationSummary">Checking local translation support…</p>
+        </div>
+        <span id="translationBadge" class="engine-badge">Checking</span>
+      </div>
+      <div class="engine-actions engine-actions-wrap">
+        <button id="installTranslation" class="primary-button" type="button">Install translation engine</button>
+        <button id="installQualityTranslation" class="quiet-button" type="button">Install high-quality model</button>
+        <button id="prepareTranslation" class="quiet-button" type="button">Download selected language</button>
+        <button id="openVoiceSettings" class="quiet-button" type="button">Windows voices</button>
+      </div>
+      <pre id="translationProgress" class="engine-progress" hidden></pre>
+      <p class="privacy-note">Translation stays local. The optional MADLAD quality model is about 3 GB and supports hundreds of target languages without pair-specific packs. Voice playback uses voices installed in Windows.</p>
+    </section>
+
+
+    <div class="section-heading activity-heading">
+      <div class="section-kicker">RECENT ACTIVITY</div>
+      <p>Session-only diagnostics so you can tell whether speech recognition or translation caused a bad result.</p>
+    </div>
+
+    <section class="activity-log" aria-labelledby="recentActivityTitle">
+      <div class="activity-topline">
+        <div>
+          <h2 id="recentActivityTitle">Last Ink result</h2>
+          <p id="recentMeta">Nothing recorded this session yet.</p>
+        </div>
+        <button id="copyRecentActivity" class="quiet-button" type="button" disabled>Copy details</button>
+      </div>
+      <div class="activity-row">
+        <span class="activity-label">Heard</span>
+        <p id="recentHeard" class="activity-text">—</p>
+      </div>
+      <div class="activity-row">
+        <span class="activity-label">Translated</span>
+        <p id="recentTranslated" class="activity-text">—</p>
+      </div>
+      <div id="recentErrorRow" class="activity-row" hidden>
+        <span class="activity-label">Error</span>
+        <p id="recentError" class="activity-text activity-error">—</p>
+      </div>
+    </section>
+
+    <footer>
+      <span>Ink 0.2.12</span>
+      <span>Local dictation · offline translation</span>
+    </footer>
+  </main>
+
+  <script src="language-names.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+:root {
+  color-scheme: dark;
+  font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+  user-select: none;
+}
+
+body { -webkit-font-smoothing: antialiased; }
+
+.stage {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 4px 6px;
+}
+
+.pill {
+  width: 168px;
+  height: 40px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(38, 38, 38, 0.985);
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  transform: translateY(6px) scale(0.988);
+  opacity: 0;
+  transition:
+    opacity 120ms ease,
+    transform 160ms cubic-bezier(.2,.85,.2,1),
+    background-color 120ms ease;
+  app-region: drag;
+  -webkit-app-region: drag;
+  cursor: grab;
+}
+
+.pill.is-visible {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.waveform {
+  position: absolute;
+  inset: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2px;
+  opacity: 1;
+  transition: opacity 100ms ease, transform 150ms ease;
+}
+
+.bar {
+  flex: 0 0 2.2px;
+  width: 2.2px;
+  height: 4px;
+  min-height: 4px;
+  border-radius: 999px;
+  background: rgba(214, 214, 214, 0.70);
+  box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.025);
+  will-change: height, opacity;
+  transition: height 64ms linear, opacity 100ms linear;
+}
+
+.pill.is-processing .waveform .bar {
+  animation: processPulse 800ms ease-in-out infinite alternate;
+}
+
+.pill.is-processing .waveform .bar:nth-child(4n + 1) { animation-delay: -500ms; }
+.pill.is-processing .waveform .bar:nth-child(4n + 2) { animation-delay: -320ms; }
+.pill.is-processing .waveform .bar:nth-child(4n + 3) { animation-delay: -140ms; }
+
+@keyframes processPulse {
+  from { opacity: .28; transform: scaleY(.55); }
+  to   { opacity: .78; transform: scaleY(1); }
+}
+
+.status {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  opacity: 0;
+  transform: translateY(2px);
+  transition: opacity 100ms ease, transform 120ms ease;
+  pointer-events: none;
+}
+
+.status-glyph {
+  width: 14px;
+  height: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 11.5px;
+  line-height: 1;
+  color: rgba(235, 235, 235, .94);
+}
+
+.status-text {
+  max-width: 122px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(238, 238, 238, .88);
+  font-size: 12px;
+  font-weight: 550;
+  letter-spacing: .005em;
+}
+
+.pill.is-success .waveform,
+.pill.is-error .waveform,
+.pill.is-cancelled .waveform,
+.pill.is-translated .waveform { opacity: 0; transform: scaleX(.96); }
+
+.pill.is-success .status,
+.pill.is-error .status,
+.pill.is-cancelled .status,
+.pill.is-translated .status { opacity: 1; transform: translateY(0); }
+
+.pill.is-translated .status {
+  pointer-events: auto;
+  app-region: no-drag;
+  -webkit-app-region: no-drag;
+  cursor: pointer;
+}
+
+.pill.is-translated .status:hover .status-glyph,
+.pill.is-translated .status:hover .status-text { color: #ffffff; }
+
+.pill.is-error { background: rgba(42, 36, 36, 0.985); }
+.pill.is-cancelled { background: rgba(35, 35, 35, 0.985); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pill, .waveform, .status, .bar { transition: none !important; }
+  .pill.is-processing .waveform .bar { animation: none !important; opacity: .55; }
+}

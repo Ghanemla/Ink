@@ -1,0 +1,54 @@
+{
+  "name": "ink-dictation",
+  "version": "0.2.12",
+  "description": "Fast local Windows dictation and offline speech translation with a tiny floating waveform pill.",
+  "main": "electron/main.mjs",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "build": "electron-builder --win nsis portable",
+    "build:installer": "electron-builder --win nsis",
+    "build:portable": "electron-builder --win portable"
+  },
+  "devDependencies": {
+    "electron": "44.1.1",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "com.ink.dictation",
+    "productName": "Ink",
+    "asar": true,
+    "files": [
+      "electron/**/*",
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "scripts",
+        "to": "scripts",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": ["nsis", "portable"],
+      "icon": "assets/icon.ico",
+      "executableName": "Ink"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "Ink",
+      "runAfterFinish": true
+    },
+    "portable": {
+      "artifactName": "Ink-Portable-${version}.exe"
+    },
+    "artifactName": "Ink-Setup-${version}.${ext}"
+  }
+}

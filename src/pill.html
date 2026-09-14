@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ink</title>
+  <link rel="stylesheet" href="pill.css" />
+</head>
+<body>
+  <main class="stage" aria-live="polite">
+    <section id="pill" class="pill is-listening" role="status" aria-label="Ink is listening">
+      <div id="waveform" class="waveform" aria-hidden="true"></div>
+      <div id="status" class="status" aria-hidden="true">
+        <span id="statusGlyph" class="status-glyph"></span>
+        <span id="statusText" class="status-text"></span>
+      </div>
+    </section>
+  </main>
+  <script src="pill.js"></script>
+</body>
+</html>
